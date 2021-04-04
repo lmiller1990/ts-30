@@ -12,42 +12,46 @@ export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
 
   return (
-    <div>
-      <h1>Login</h1>
-
-      <Form
-        submitText="Login"
-        schema={Login}
-        initialValues={{ email: "", password: "" }}
-        onSubmit={async (values) => {
-          try {
-            await loginMutation(values)
-            props.onSuccess?.()
-          } catch (error) {
-            if (error instanceof AuthenticationError) {
-              return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
-            } else {
-              return {
-                [FORM_ERROR]:
-                  "Sorry, we had an unexpected error. Please try again. - " + error.toString(),
+    <>
+      <div className="flex justify-center mx-16 my-8">
+        <Form
+          submitText="Login"
+          schema={Login}
+          initialValues={{ email: "", password: "" }}
+          onSubmit={async (values) => {
+            try {
+              await loginMutation(values)
+              props.onSuccess?.()
+            } catch (error) {
+              if (error instanceof AuthenticationError) {
+                return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
+              } else {
+                return {
+                  [FORM_ERROR]:
+                    "Sorry, we had an unexpected error. Please try again. - " + error.toString(),
+                }
               }
             }
-          }
-        }}
-      >
-        <LabeledTextField name="email" label="Email" placeholder="Email" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
+          }}
+        >
+          <LabeledTextField name="email" label="Email" placeholder="Email" />
+          <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
+        </Form>
+      </div>
+
+      <div className="text-black flex flex-col items-center pb-4">
         <div>
           <Link href="/forgot-password">
-            <a>Forgot your password?</a>
+            <a className="underline">Forgot your password?</a>
           </Link>
         </div>
-      </Form>
-
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href="/signup">Sign Up</Link>
+        <Link href="/signup">
+          <a className="underline">
+            Sign Up
+          </a>
+        </Link>
       </div>
-    </div>
+    </>
   )
 }
 

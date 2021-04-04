@@ -1,9 +1,10 @@
 import Form from "app/core/components/Form"
 import * as z from "zod"
-import { BlitzPage } from "blitz"
-import React, { forwardRef, PropsWithoutRef } from "react"
+import { BlitzPage, Link } from "blitz"
+import React, { forwardRef, PropsWithoutRef, Suspense } from "react"
 import { useField } from "react-final-form"
 import SignupForm from "app/auth/components/SignupForm"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 const InfoCard: React.FC<{ title: string; content: JSX.Element[] }> = (props) => {
   return (
@@ -48,33 +49,36 @@ export const EmailInput = forwardRef<HTMLInputElement>((props, ref) => {
   )
 })
 
-const EmailForm: React.FC = () => {
+export const TypeScript30: React.FC<{ href: string }> = (props) => {
   return (
-    <Form
-      schema={EmailForSchema}
-      initialValues={{ email: "" }}
-      onSubmit={async (values) => {
-        console.log(values)
-      }}
-    >
-      <EmailInput />
-      <button className="bg-blue-700 hover:bg-blue-800 duration-75 p-4 px-8 inline-flex m-4 cursor-pointer rounded-lg">
-        Preview Lectures
-      </button>
-    </Form>
+    <Link href={props.href} passHref>
+      <a className="text-white flex flex-col items-center">
+        <h1 className="text-7xl p-2">TypeScript30</h1>
+        <h3 className="text-4xl p-2">30 days. 30 TypeScript lessons.</h3>
+      </a>
+    </Link>
   )
 }
 
+const NavLink: React.FC = () => {
+  const user = useCurrentUser()
+  return user 
+    ? <Link href="/lectures">Dashboard</Link> 
+    : <Link href="/login">Existing Users</Link>
+}
+
 const Home: BlitzPage = () => {
+
   return (
-    <div className="bg-blue-500 flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="max-w-3xl text-center flex flex-col p-8 pt-4">
         <div className="text-white self-end rounded-lg hover:bg-blue-400 duration-100 cursor-pointer p-2">
-          Existing Users
+          <Suspense fallback="">
+            <NavLink />
+          </Suspense>
         </div>
         <div className="text-white p-12">
-          <h1 className="text-7xl p-2">TypeScript30</h1>
-          <h3 className="text-4xl p-2">30 days. 30 TypeScript lessons.</h3>
+          <TypeScript30 href="/" />
           <h6 className="text-lg">
             <div className="px-24">
               Learn the intricacies of TypeScript's powerful type system using examples from top

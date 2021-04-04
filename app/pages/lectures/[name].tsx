@@ -1,6 +1,7 @@
-import { BlitzPage, useParam } from "blitz"
-import { html, style } from 'app/core/layouts/html'
-import { LecturesLayout } from 'app/core/layouts/LecturesLayout'
+import { BlitzPage, useParam, dynamic } from "blitz"
+import { useState, useEffect } from 'react'
+import { LecturesLayout, LectureSlug, lecturesMap } from 'app/core/layouts/LecturesLayout'
+import { style } from 'app/articles/style'
 
 const DemoVideo = () => (
   <div className='embed-container'>
@@ -40,15 +41,24 @@ const DemoVideo = () => (
 )
 
 export const Lecture: BlitzPage = () => {
-  const lectureName = useParam("name")
+  const lectureName = useParam('name') as LectureSlug
+  const [html, setHtml] = useState('')
+
+  useEffect(() => {
+    const lecture = lecturesMap[lectureName]
+    if (lecture) {
+      setHtml(lecture.html.concat(style))
+    }
+  }, [lectureName, lecturesMap, setHtml, style])
+
 
   return (
     <LecturesLayout>
       <DemoVideo />
-      <div className="article bg-white p-6 overflow-x-scroll">
+      <div className="article bg-white p-6 overflow-x-scroll mt-4">
         <div
           style={{ whiteSpace: 'pre-wrap' }}
-          dangerouslySetInnerHTML={{ __html: html.concat(style) }}
+          dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
     </LecturesLayout>

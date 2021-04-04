@@ -15,7 +15,7 @@ export const SignupForm = (props) => {
   return (
     <div className="flex justify-center mx-16 my-8">
       <Form
-        submitText="Preview Lectures"
+        submitText="Register and Preview Lectures"
         schema={Signup}
         initialValues={{ email: "", password: "" }}
         onSubmit={async (values) => {
