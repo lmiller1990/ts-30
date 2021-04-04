@@ -34,7 +34,7 @@ const Main = () => {
 
 const Lectures: BlitzPage = () => {
   return (
-    <div className="container">
+    <div>
       <Suspense fallback="Loading...">
         <Main />
       </Suspense>

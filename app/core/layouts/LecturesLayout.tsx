@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { Head } from "blitz"
-import { html } from './html'
+import { html, style } from './html'
 
 interface LayoutProps {
   title?: string
@@ -86,13 +86,15 @@ export const LecturesLayout = (props: LayoutProps) => {
       <div
         className="p-8 bg-blue-500 flex flex-col items-center justify-center"
       >
-        <div className="w-full grid grid-cols-6 gap-4">
-          <div className="col-span-5">
+        <div className="w-full grid grid-cols-6 gap-4 max-w-screen-lg">
+          <div className="col-span-4">
             <DemoVideo />
-            <div 
-              style={{ whiteSpace: 'pre-wrap' }}
-              dangerouslySetInnerHTML={{ __html: html }} 
-            />
+            <div className="article bg-white p-6 overflow-x-scroll">
+              <div
+                style={{ whiteSpace: 'pre-wrap' }}
+                dangerouslySetInnerHTML={{ __html: html.concat(style) }}
+              />
+            </div>
           </div>
           <Sidebar />
         </div>

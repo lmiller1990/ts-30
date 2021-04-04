@@ -1,5 +1,5 @@
-export const html = `
-<h2>Types and Interfaces</h2>
+export const html =
+`<h2>Types and Interfaces</h2>
 <p>In this article we explore the intricaties of types and interfaces - defined via <code>type</code> and <code>interface</code> - in TypeScript. There are some similarities, but also some differences to look out for.</p>
 <h2>Not Types, but Type Aliases</h2>
 <p>If we look at the <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases">official documentation</a>, we will see types are actually referred to as &quot;Type Aliases&quot;. When you define a type, you are creating an alias, or a new <em>name</em>, to an existing definition. A type alias (often just referred to as a type for short, like in this article) defines data.</p>
@@ -193,6 +193,87 @@ export const html = `
   <span class="hljs-comment">// ...</span>
 }
 </code></pre>
-<p>This results in a much easier comparison for the TypeScript compiler to execute. The more you know.</p>
+<p>This results in a much easier comparison for the TypeScript compiler to execute. The more you know.</p>`
 
-`
+export const style =
+`<style>
+.article h2 {
+  font-size: 24px;
+}
+
+p > code {
+  background: rgba(243, 244, 246, var(--tw-bg-opacity));
+  color: rgb(239, 68, 68);
+  padding: 0.1rem 0.2rem;
+}
+/* Syntax theme */
+
+/* Base16 Atelier Forest Light - Theme */
+/* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/forest) */
+/* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
+
+/* Atelier-Forest Comment */
+.hljs-comment,
+.hljs-quote {
+  color: #766e6b;
+}
+
+/* Atelier-Forest Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-name,
+.hljs-regexp,
+.hljs-link,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #f22c40;
+}
+
+/* Atelier-Forest Orange */
+.hljs-number,
+.hljs-meta,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params {
+  color: #df5320;
+}
+
+/* Atelier-Forest Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet {
+  color: #7b9726;
+}
+
+/* Atelier-Forest Blue */
+.hljs-title,
+.hljs-section {
+  color: #407ee7;
+}
+
+/* Atelier-Forest Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #6666ea;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  background: #f1efee;
+  color: #68615e;
+  padding: 0.5em;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}</style>`
