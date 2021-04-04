@@ -1,77 +1,85 @@
 import { ReactNode } from "react"
-import { Head } from "blitz"
-import { html, style } from './html'
+import cs from 'classnames'
+import { Head, Link, useParam } from "blitz"
 
 interface LayoutProps {
   title?: string
   children: ReactNode
 }
 
-const DemoVideo = () => (
-  <div className='embed-container'>
-    <style jsx global>{`
-      .embed-container {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        overflow: hidden;
-        max-width: 100%;
-      }
+interface Lecture {
+  title: string
+  slug: string
+}
+
+type LectureSlug = "interfaces-vs-types" | "infer-keyword" | any
+
+const lecturesMap: Record<LectureSlug, Lecture> = {
+  "interfaces-vs-types": {
+    title: "Interfaces vs Types",
+    slug: "interfaces-vs-types"
+  },
+  "type-inference-with-infer-keyword": {
+    title: "Type Inference with the infer keyword",
+    slug: "type-inference-with-infer-keyword"
+  },
+  "Generics": {
+    title: "Generics",
+    slug: "generics"
+  },
+  "Map/Recursive types": {
+    title: "Map and Recursive types",
+    slug: "map-and-recusive-types"
+  },
+  "literal-types-and-the-const-keywords": {
+    title: "Literal Types and the const Keyword",
+    slug: "literal-types-and-the-const-keywords"
+  },
+  // "Function overloads",
+  // "Utility types",
+  // "namespace and module",
+  // "enum",
+  // "Decorators",
+  // "Class tricks",
+  // "Type guard with is",
+  // "Assertions, any and unknown",
+  // "Discriminated unions",
+  // "never type",
+  // "ThisType and this",
+  // "extends keyword for types",
+}
+
+
+const lectures = Object.values(lecturesMap)
+
+const LectureItem: React.FC<{ lecture: Lecture }> = (props) => {
+  const lectureName = useParam("name")
+
+  return (
+    <Link href={`/lectures/${props.lecture.slug}`} passHref>
+      <a 
+        className={cs("hover:text-gray-900 text-gray-500 block p-2 rounded-sm", {
+          'text-gray-900': lectureName === props.lecture.slug,
+          'bg-blue-100': lectureName === props.lecture.slug
+        })}
+      >
+        {props.lecture.title}
+      </a>
+    </Link>
       
-      .embed-container iframe,
-      .embed-container object,
-      .embed-container embed {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    `}
-    </style>
-    <iframe
-      src='https://player.vimeo.com/video/66140585'
-      frameBorder='0'
-      allowFullScreen />
-  </div>
-  // <iframe 
-  //   src="https://player.vimeo.com/video/523333043?title=0&byline=0&portrait=0" 
-  //   width="640"
-  //   height="360" 
-  //   frameBorder="0" 
-  //   allow="autoplay; fullscreen; picture-in-picture" 
-  //   allowFullScreen={true}
-  // />
-)
-
-const lectures = [
-  "Interfaces vs Types",
-  "infer keyword",
-  "Generics",
-  "Map/Recursive types",
-  "Literal types and the const keywords",
-  "Function overloads",
-  "Utility types",
-  "namespace and module",
-  "enum",
-  "Decorators",
-  "Class tricks",
-  "Type guard with is",
-  "Assertions, any and unknown",
-  "Discriminated unions",
-  "never type",
-  "ThisType and this",
-  "extends keyword for types",
-]
-
+  )
+}
 
 const Sidebar: React.FC = () => {
   return (
-    <ul>
-      {lectures.map(lecture => (
-        <li key={lecture}>{lecture}</li>
-      ))}
-    </ul>
+    <div className="w-full bg-white p-4 rounded-sm shadow-lg text-xl">
+      {lectures.map(lecture => 
+        <LectureItem 
+          key={lecture.slug}
+          lecture={lecture} 
+        />
+      )}
+    </div>
   )
 }
 
@@ -88,15 +96,11 @@ export const LecturesLayout = (props: LayoutProps) => {
       >
         <div className="w-full grid grid-cols-6 gap-4 max-w-screen-lg">
           <div className="col-span-4">
-            <DemoVideo />
-            <div className="article bg-white p-6 overflow-x-scroll">
-              <div
-                style={{ whiteSpace: 'pre-wrap' }}
-                dangerouslySetInnerHTML={{ __html: html.concat(style) }}
-              />
-            </div>
+            {props.children}
           </div>
-          <Sidebar />
+          <div className="col-span-2">
+            <Sidebar />
+          </div>
         </div>
       </div>
     </>
