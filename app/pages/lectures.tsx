@@ -1,4 +1,5 @@
 import { BlitzPage, Link } from "blitz"
+import { LecturesLayout } from "../core/layouts/LecturesLayout"
 import { Suspense } from "react"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
@@ -24,7 +25,11 @@ const Main = () => {
     )
   }
 
-  return <h1>Lectures</h1>
+  return (
+    <LecturesLayout>
+      Blah 
+    </LecturesLayout>
+  )
 }
 
 const Lectures: BlitzPage = () => {
